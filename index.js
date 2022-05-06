@@ -26,6 +26,12 @@ async function run() {
             res.send(products);
         })
 
+        app.post('/products', async (req, res) => {
+            const newProduct = req.body;
+            const result = await phoneDB.insertOne(newProduct);
+            res.send(result)
+        })
+
 
     } finally {
 
