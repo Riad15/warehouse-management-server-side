@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { query } = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -26,9 +27,28 @@ async function run() {
             res.send(products);
         })
 
+        // find a product
+        app.get('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await phoneDB.findOne(query);
+            res.send(result);
+        })
+
+        // insert a product
         app.post('/products', async (req, res) => {
             const newProduct = req.body;
             const result = await phoneDB.insertOne(newProduct);
+            res.send(result)
+        })
+
+
+
+        // delete a product
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await phoneDB.deleteOne(query);
             res.send(result)
         })
 
