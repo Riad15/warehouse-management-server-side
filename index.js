@@ -73,7 +73,7 @@ async function run() {
 
 
         // delete a product
-        app.delete('/products/:id', async (req, res) => {
+        app.delete('/myitems/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const result = await phoneDB.deleteOne(query);
