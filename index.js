@@ -51,6 +51,22 @@ async function run() {
             res.send(result)
         })
 
+        // update a quantity
+        app.put('/quantity/:id', async (req, res) => {
+            const id = req.params.id;
+            const newQuantity = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    quantity: newQuantity.quantity,
+                }
+            };
+            const result = await phoneDB.updateOne(filter, updateDoc, options);
+            res.send(result);
+
+        })
+
         // update product
         app.put('/products/:id', async (req, res) => {
             const id = req.params.id;
