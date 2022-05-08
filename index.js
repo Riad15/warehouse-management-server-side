@@ -27,6 +27,15 @@ async function run() {
             res.send(products);
         })
 
+        // find my item
+        app.get('/myitems', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = phoneDB.find(query);
+            const myitems = await cursor.toArray();
+            res.send(myitems);
+        })
+
         // find a product
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
